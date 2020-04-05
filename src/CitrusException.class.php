@@ -53,4 +53,28 @@ class CitrusException extends Exception
     {
         return new self($e->getMessage(), $e->getCode(), $e->getPrevious());
     }
+
+
+
+    /**
+     * 引数がfalseの時にexceptionがthrowされる
+     *
+     * @param bool|callable $expr
+     * @param string $message メッセージ
+     * @return void
+     * @throws self
+     */
+    public static function exceptionIf($expr, string $message): void
+    {
+        // 無名関数の場合は再起する
+        if (true === is_callable($expr))
+        {
+            self::exceptionIf($expr(), $message);
+        }
+
+        if (false === $expr)
+        {
+            throw new self($message);
+        }
+    }
 }

@@ -80,4 +80,26 @@ class CitrusExceptionTest extends TestCase
 
         $this->assertSame(1, $count);
     }
+
+
+
+    /**
+     * @test
+     */
+    public function exceptionIf_想定通り()
+    {
+        $is_match_exception = false;
+        try
+        {
+            CitrusException::exceptionIf(function() {
+                return false;
+            }, 'unit-test');
+        }
+        catch (CitrusException $e)
+        {
+            $is_match_exception = true;
+        }
+
+        $this->assertTrue($is_match_exception);
+    }
 }
