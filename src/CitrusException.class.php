@@ -47,11 +47,11 @@ class CitrusException extends Exception
      * CitrusException converter
      *
      * @param Exception $e
-     * @return self
+     * @return static
      */
     public static function convert(\Exception $e): self
     {
-        return new self($e->getMessage(), $e->getCode(), $e->getPrevious());
+        return new static($e->getMessage(), $e->getCode(), $e->getPrevious());
     }
 
 
@@ -62,19 +62,19 @@ class CitrusException extends Exception
      * @param bool|callable $expr
      * @param string        $message メッセージ
      * @return void
-     * @throws self
+     * @throws static
      */
     public static function exceptionIf($expr, string $message): void
     {
         // 無名関数の場合は再起する
         if (true === is_callable($expr))
         {
-            self::exceptionIf($expr(), $message);
+            static::exceptionIf($expr(), $message);
         }
 
         if (true === $expr)
         {
-            throw new self($message);
+            throw new static($message);
         }
     }
 
@@ -86,19 +86,19 @@ class CitrusException extends Exception
      * @param bool|callable $expr
      * @param string        $message メッセージ
      * @return void
-     * @throws self
+     * @throws static
      */
     public static function exceptionElse($expr, string $message): void
     {
         // 無名関数の場合は再起する
         if (true === is_callable($expr))
         {
-            self::exceptionElse($expr(), $message);
+            static::exceptionElse($expr(), $message);
         }
 
         if (false === $expr)
         {
-            throw new self($message);
+            throw new static($message);
         }
     }
 }
