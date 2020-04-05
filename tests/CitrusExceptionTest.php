@@ -92,6 +92,28 @@ class CitrusExceptionTest extends TestCase
         try
         {
             CitrusException::exceptionIf(function() {
+                return true;
+            }, 'unit-test');
+        }
+        catch (CitrusException $e)
+        {
+            $is_match_exception = true;
+        }
+
+        $this->assertTrue($is_match_exception);
+    }
+
+
+
+    /**
+     * @test
+     */
+    public function exceptionElse_想定通り()
+    {
+        $is_match_exception = false;
+        try
+        {
+            CitrusException::exceptionElse(function() {
                 return false;
             }, 'unit-test');
         }
