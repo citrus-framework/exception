@@ -63,7 +63,6 @@ class CitrusException extends Exception
      *
      * @param bool|callable $expr
      * @param string        $message メッセージ
-     * @return void
      */
     public static function exceptionIf($expr, string $message): void
     {
@@ -86,7 +85,6 @@ class CitrusException extends Exception
      *
      * @param bool|callable $expr
      * @param string        $message メッセージ
-     * @return void
      */
     public static function exceptionElse($expr, string $message): void
     {
