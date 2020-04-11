@@ -15,6 +15,8 @@ use Throwable;
 
 /**
  * Citrusの基本例外
+ *
+ * throwsの型チェックが厳しいので継承する場合は再定義推奨
  */
 class CitrusException extends Exception
 {
@@ -47,7 +49,7 @@ class CitrusException extends Exception
      * CitrusException converter
      *
      * @param Exception $e
-     * @return $this
+     * @return self
      */
     public static function convert(\Exception $e): self
     {
@@ -62,7 +64,7 @@ class CitrusException extends Exception
      * @param bool|callable $expr
      * @param string        $message メッセージ
      * @return void
-     * @throws $this
+     * @throws self
      */
     public static function exceptionIf($expr, string $message): void
     {
@@ -86,7 +88,7 @@ class CitrusException extends Exception
      * @param bool|callable $expr
      * @param string        $message メッセージ
      * @return void
-     * @throws $this
+     * @throws self
      */
     public static function exceptionElse($expr, string $message): void
     {
