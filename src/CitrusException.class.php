@@ -21,7 +21,7 @@ use Throwable;
 class CitrusException extends Exception
 {
     /** @var callable[] exception生成時のフック処理 */
-    public static $hooks = [];
+    private static $hooks = [];
 
     /** @var string 内部メッセージ */
     private $internal_message;
@@ -67,6 +67,18 @@ class CitrusException extends Exception
     public function setInternalMessage(string $internal_message): void
     {
         $this->internal_message = $internal_message;
+    }
+
+
+
+    /**
+     * 生成時フックの追加
+     *
+     * @param callable $hook
+     */
+    public static function addHook(callable $hook)
+    {
+        self::$hooks[] = $hook;
     }
 
 

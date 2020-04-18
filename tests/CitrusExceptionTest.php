@@ -66,9 +66,9 @@ class CitrusExceptionTest extends TestCase
     {
         $count = 0;
 
-        CitrusException::$hooks[] = function () use (&$count) {
+        CitrusException::addHook(function () use (&$count) {
             $count++;
-        };
+        });
 
         try
         {
