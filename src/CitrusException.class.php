@@ -23,6 +23,9 @@ class CitrusException extends Exception
     /** @var callable[] exception生成時のフック処理 */
     public static $hooks = [];
 
+    /** @var string 内部メッセージ */
+    private $internal_message;
+
 
 
     /**
@@ -36,11 +39,34 @@ class CitrusException extends Exception
     {
         parent::__construct($message, $code, $previous);
 
+        // 通常は内部メッセージにもコピー
+        $this->setInternalMessage($message);
+
         // フック処理
         foreach (self::$hooks as $hook)
         {
             $hook($this);
         }
+    }
+
+
+
+    /**
+     * @return string
+     */
+    public function getInternalMessage(): string
+    {
+        return $this->internal_message;
+    }
+
+
+
+    /**
+     * @param string $internal_message
+     */
+    public function setInternalMessage(string $internal_message): void
+    {
+        $this->internal_message = $internal_message;
     }
 
 
