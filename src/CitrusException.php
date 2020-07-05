@@ -87,7 +87,7 @@ class CitrusException extends Exception
      * CitrusException converter
      *
      * @param Exception $e
-     * @return static
+     * @return $this
      */
     public static function convert(\Exception $e): self
     {
@@ -101,6 +101,7 @@ class CitrusException extends Exception
      *
      * @param bool|callable $expr
      * @param string        $message メッセージ
+     * @throws $this
      */
     public static function exceptionIf($expr, string $message): void
     {
@@ -123,6 +124,7 @@ class CitrusException extends Exception
      *
      * @param bool|callable $expr
      * @param string        $message メッセージ
+     * @throws $this
      */
     public static function exceptionElse($expr, string $message): void
     {
