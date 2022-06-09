@@ -21,21 +21,21 @@ use Throwable;
 class CitrusException extends Exception
 {
     /** @var callable[] exception生成時のフック処理 */
-    private static $hooks = [];
+    protected static array $hooks = [];
 
     /** @var string 内部メッセージ */
-    private $internal_message;
+    protected string $internal_message;
 
 
 
     /**
      * constructor.
      *
-     * @param string         $message
-     * @param int            $code
-     * @param Throwable|null $previous
+     * @param string         $message  メッセージ
+     * @param int            $code     エラーコード
+     * @param Throwable|null $previous 以前のスローされた例外
      */
-    public function __construct($message = '', $code = 0, Throwable $previous = null)
+    public function __construct(string $message = '', int $code = 0, Throwable|null $previous = null)
     {
         parent::__construct($message, $code, $previous);
 
@@ -52,7 +52,7 @@ class CitrusException extends Exception
 
 
     /**
-     * @return string
+     * @return string 内部メッセージ
      */
     public function getInternalMessage(): string
     {
@@ -62,7 +62,7 @@ class CitrusException extends Exception
 
 
     /**
-     * @param string $internal_message
+     * @param string $internal_message 内部メッセージ
      */
     public function setInternalMessage(string $internal_message): void
     {
@@ -74,9 +74,9 @@ class CitrusException extends Exception
     /**
      * 生成時フックの追加
      *
-     * @param callable $hook
+     * @param callable $hook フック用のcallableな関数
      */
-    public static function addHook(callable $hook)
+    public static function addHook(callable $hook): void
     {
         self::$hooks[] = $hook;
     }
@@ -86,7 +86,7 @@ class CitrusException extends Exception
     /**
      * CitrusException converter
      *
-     * @param Exception $e
+     * @param Exception $e 例外
      * @return $this
      */
     public static function convert(\Exception $e): self
@@ -99,11 +99,11 @@ class CitrusException extends Exception
     /**
      * 引数がtrueの時にexceptionがthrowされる
      *
-     * @param bool|callable $expr
+     * @param callable|bool $expr    exception条件の無名関数
      * @param string        $message メッセージ
      * @throws $this
      */
-    public static function exceptionIf($expr, string $message): void
+    public static function exceptionIf(callable|bool $expr, string $message): void
     {
         // 無名関数の場合は再起する
         if (true === is_callable($expr))
@@ -122,11 +122,11 @@ class CitrusException extends Exception
     /**
      * 引数がfalseの時にexceptionがthrowされる
      *
-     * @param bool|callable $expr
+     * @param callable|bool $expr    exception条件の無名関数
      * @param string        $message メッセージ
      * @throws $this
      */
-    public static function exceptionElse($expr, string $message): void
+    public static function exceptionElse(callable|bool $expr, string $message): void
     {
         // 無名関数の場合は再起する
         if (true === is_callable($expr))
